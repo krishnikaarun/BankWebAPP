@@ -24,11 +24,28 @@ namespace BankAPPWeb.Banks
             User User1 = this.accountdao.Login(UserID, PIN);
             return User1;
         }
-        public User BalanceCheckUser(int UserID)
+        public int BalanceCheckUser(String UserID)
         {
-            User User2 = this.accountdao.BalanceCheck(UserID);
+            int User2 = this.accountdao.BalanceCheck(UserID);
             return User2;
         }
+        public int DepositUser(int Amt,string value)
+        {
+            int User2 = this.accountdao.Deposit(Amt,value);
+            return User2;
+        }
+        public int WithdrawUser(int Amt,int UID)
+        {
+            int User3 = this.accountdao.Withdraw(Amt,UID);
+            return User3;
+        }
+        public int TransferUser(int Amt,int UID,int UID2)
+        {
+            int User3 = this.accountdao.Withdraw(Amt,UID);
+            int User4 = this.accountdao.Deposit(Amt,Convert.ToString(UID2));
+            return User3;
+        }
+        /*
             //main operation funtion
             public void MainAtmn(int UserID , int PIN)
             {                     
@@ -141,6 +158,6 @@ namespace BankAPPWeb.Banks
                     Console.Beep();
                     Console.WriteLine("Incorrect UserID or Password!!!");
                 }
-        }
+        */
     }
 }

@@ -1,4 +1,6 @@
-﻿function changetextbox() {
+﻿var op; 
+
+function changetextbox() {
 	if (document.getElementById("Dropdown").value === "TranferAmount") {
 		$("#UserID2").prop("disabled", false);
 	} else {
@@ -6,7 +8,7 @@
 	}
 }
 
-var op;
+
 function Submit() {
 	if (document.getElementById("Dropdown").value === "DepositAmount") {
 		var op = 1;
@@ -19,5 +21,11 @@ function Submit() {
 			}
 		}
 	}
+	console.log(op);
+	if (op) {
+		$.post('Home/Display', { op: op }, function (output) {
+			console.log(output);
+		})
+	}
 }
-console.log(op);
+

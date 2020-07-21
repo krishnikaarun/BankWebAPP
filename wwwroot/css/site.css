@@ -117,6 +117,13 @@ h3 {
     text-decoration: none;
     text-transform: uppercase;
 }
+#WithdrawAmount, #TransferAmount, #DepositAmount {
+    background-color: dodgerblue;
+    color: white;
+    padding: 1em 1.5em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
 #BalanceCheckbtn, #ViewBtn {
     background-color:lightblue;

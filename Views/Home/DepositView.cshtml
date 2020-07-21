@@ -1,5 +1,4 @@
 ﻿@{
-    var Bal = ViewData["Balance"];
     Layout = null;
 }
 <html>
@@ -10,7 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <p>displaypage</p>
-    <p>@Bal</p>
+    <form method="POST" action="/Home/Deposit">
+        <label id="label">Enter the Amount to Deposit:</label>
+        <input id="Amt" name="amt" type='number' min="1">
+        <br>
+        <button>SUBMIT</button>
+    </form>
 </body>
 </html>
+ 

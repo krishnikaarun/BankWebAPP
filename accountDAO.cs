@@ -39,7 +39,7 @@ namespace BankAPPWeb.accountDAO
             conn.Close();
             return user1;
         }
-        public User BalanceCheck(int UserID)
+        public int BalanceCheck(String UserID)
         {
             conn.Open();
             string BalanceCheckQuery = " SELECT TotAmount FROM Bank where UserID = " + UserID;
@@ -51,13 +51,11 @@ namespace BankAPPWeb.accountDAO
                 Balance[0] = reader.GetInt32(0);
             }
             conn.Close();
-            Console.WriteLine("Your Balance is : " + Balance[0]);
-            return null;
+            return Balance[0];
         }
-
-        public void Deposit(int UserID, int DepositAmount)
+        public int Deposit(int DepositAmount,string value)
         {
-            string selectBankQuery = "SELECT TotAmount FROM Bank WHERE UserID =" + UserID;
+            string selectBankQuery = "SELECT TotAmount FROM Bank WHERE UserID =" + value;
             MySqlCommand view = new MySqlCommand(selectBankQuery, conn);
             conn.Open();
             MySqlDataReader reader = view.ExecuteReader();
@@ -67,10 +65,10 @@ namespace BankAPPWeb.accountDAO
                 TotAmount[0] = reader.GetInt32(0);
                 TotAmount[0] = TotAmount[0] + DepositAmount;
                 conn.Close();
-                UpdateAmount(UserID, TotAmount[0]);
-                InsertDepositTrans(UserID, DepositAmount);
-
+                UpdateAmount(Convert.ToInt32(value), TotAmount[0]);
+                InsertDepositTrans(Convert.ToInt32(value), DepositAmount);
             }
+            return DepositAmount;
         }
 
         public void PINChange(int UserID, int NewPIN)
@@ -82,9 +80,9 @@ namespace BankAPPWeb.accountDAO
             conn.Close();
         }
 
-        public void Withdraw(int UserID, int WithdrawAmount)
+        public int Withdraw(int WithdrawAmount,int UID)
         {
-            string selectBankQuery = "SELECT TotAmount FROM Bank WHERE UserID =" + UserID;
+            string selectBankQuery = "SELECT TotAmount FROM Bank WHERE UserID =" + UID;
             MySqlCommand view = new MySqlCommand(selectBankQuery, conn);
             conn.Open();
             MySqlDataReader reader = view.ExecuteReader();
@@ -97,11 +95,12 @@ namespace BankAPPWeb.accountDAO
                 {
                     TotAmount[0] = TotAmount[0] - WithdrawAmount;
                     Console.WriteLine(TotAmount[0]);
-                    UpdateAmount(UserID, TotAmount[0]);
-                    InsertWithdrawTrans(UserID, WithdrawAmount);
+                    UpdateAmount(UID, TotAmount[0]);
+                    InsertWithdrawTrans(UID,WithdrawAmount);
 
                 }
             }
+            return WithdrawAmount;
         }
 
         public void UpdateAmount(int UserID, int TotAmount)
@@ -109,7 +108,7 @@ namespace BankAPPWeb.accountDAO
             string UpdateQuery = "UPDATE  Bank SET TotAmount =" + TotAmount + " where UserID = " + UserID;
             MySqlCommand updateCommand = new MySqlCommand(UpdateQuery, conn);
             conn.Open();
-            int RowCount = updateCommand.ExecuteNonQuery();
+            updateCommand.ExecuteNonQuery();
             conn.Close();
         }
 
@@ -145,7 +144,7 @@ namespace BankAPPWeb.accountDAO
                 AccountNo[0] = reader.GetInt32(0);
             }
             conn.Close();
-            string InsertTransQuery = "INSERT INTO Trans (CD,Amount,AccountNo,UserID) VALUES ('D'," + TotAmount + "," + AccountNo[0] + "," + UserID + ",@DATE)";
+            string InsertTransQuery = "INSERT INTO Trans (CD,Amount,AccountNo,UserID,Dated) VALUES ('D'," + TotAmount + "," + AccountNo[0] + "," + UserID + ",@DATE)";
             MySqlCommand updateCommand = new MySqlCommand(InsertTransQuery, conn);
             updateCommand.Parameters.AddWithValue("@DATE", DateTime.Now);
             conn.Open();
