@@ -1,4 +1,6 @@
-﻿namespace BankAPPWeb.Model
+﻿using System.Collections.Generic;
+
+namespace BankAPPWeb.Model
 {
     public class User
     {

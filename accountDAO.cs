@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Data.SqlClient;
-using System.Data;
 using MySql.Data.MySqlClient;
-using BankAPPWeb.accountDAO;
 using BankAPPWeb.Model;
 using Microsoft.Extensions.Configuration;
 
@@ -35,6 +31,10 @@ namespace BankAPPWeb.accountDAO
             {
                 user1.UserID = dr.GetInt32(0);
                 user1.UserName = dr.GetString(1);
+            }
+            if (user1.UserName == null)
+            {
+                return null;
             }
             conn.Close();
             return user1;
@@ -71,15 +71,15 @@ namespace BankAPPWeb.accountDAO
             return DepositAmount;
         }
 
-        public void PINChange(int UserID, int NewPIN)
+        public int PINChange(int UserID, int NewPIN)
         {
             string NewPINChangeQuery = "UPDATE  Customers SET Pin=" + NewPIN + " where UserID = " + UserID;
             MySqlCommand updateCommand = new MySqlCommand(NewPINChangeQuery, conn);
             conn.Open();
             MySqlDataReader reader = updateCommand.ExecuteReader();
             conn.Close();
+            return NewPIN;
         }
-
         public int Withdraw(int WithdrawAmount,int UID)
         {
             string selectBankQuery = "SELECT TotAmount FROM Bank WHERE UserID =" + UID;
@@ -151,7 +151,7 @@ namespace BankAPPWeb.accountDAO
             int RowCount = updateCommand.ExecuteNonQuery();
             conn.Close();
         }
-        public User[] Transact(int UserID)
+        public User[] TransLog(int UserID)
         {
             int i = 0;
             string countTransQuery = "SELECT COUNT(*) FROM Trans WHERE UserID = " + UserID;
@@ -162,7 +162,6 @@ namespace BankAPPWeb.accountDAO
             string TransLogQuery = "SELECT TransID, CD, Amount, AccountNo, UserID, Dated FROM Trans WHERE UserID = " + UserID;
             MySqlCommand selectCommand = new MySqlCommand(TransLogQuery, conn);
             MySqlDataReader reader = selectCommand.ExecuteReader();
-            Console.WriteLine("  TranID     CD     Amount      AccountNo      Date");
             while (reader.Read())
             {
                 User Tran = new User();
@@ -172,7 +171,6 @@ namespace BankAPPWeb.accountDAO
                 Tran.AccountNo = reader.GetInt32(3);
                 Tran.Dated = reader.GetString(5);
                 Tran1[i] = Tran;
-                Console.WriteLine("  " + Tran.TransID + "      " + Tran.CD + "      " + Tran.Amount + "        " + Tran.AccountNo+"       "+Tran.Dated);
                 i++;
             }
             conn.Close();

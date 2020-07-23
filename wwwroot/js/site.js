@@ -1,4 +1,5 @@
-﻿var op; 
+﻿
+/*var op; 
 
 function changetextbox() {
 	if (document.getElementById("Dropdown").value === "TranferAmount") {
@@ -29,3 +30,4 @@ function Submit() {
 	}
 }
 
+*/

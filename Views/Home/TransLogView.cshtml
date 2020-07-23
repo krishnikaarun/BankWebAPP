@@ -1,6 +1,6 @@
 ﻿@{
     Layout = null;
-    //session
+    @model IEnumerable<BankAPPWeb.Model.User>
 }
 <html>
 <head>
@@ -10,9 +10,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <form method="POST" action="/Home/Deposit">
-
-    </form>
+    <div id="center">
+    <table class="table">
+        <tr>
+            <th>Transation ID</th>
+            <th>Transation Type</th>
+            <th>Amount</th>
+            <th>Dated</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TransID</td>
+                <td>@item.CD</td>
+                <td>@item.Amount</td>
+                <td>@item.Dated</td>
+            </tr>
+        }
+    </table>
+    <input type="button" value="Main Menu" id="Mainbtn" onclick="history.back()" />
+    </div>
 </body>
 </html>
- 

@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var st = ViewData["st"];
 }
 <html>
 <head>
@@ -9,12 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <div id="center"> 
     <form method="POST" action="/Home/Withdraw">
+        <p>@st</p>
         <label id="label">Enter the Amount to Withdraw:</label>
         <input id="Amt" name="amt" type='number' min="1">
         <br>
-        <button>SUBMIT</button>
+        <button id="Submit">SUBMIT</button>
+        <input type="button" value="Main Menu" id="Mainbtn" onclick="history.back()" />
     </form> 
+    </div>
 </body>
 </html>
  

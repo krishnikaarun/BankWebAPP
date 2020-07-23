@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var err = ViewData["Error"];
 }
 
 <html>
@@ -13,8 +14,9 @@
     <form method="POST" action ="/Home/Main">
         <div id="Loginpage">
             <h3>WELCOME TO ABC BANK ATM</h3>
-            <label id="label">User ID: </label><input id="userid" name="UserID" type='number' autofocus min="1000 " max="9999" maxlength="4"><br><br>
-            <label id="label">PIN: </label><input id="pin" name="PIN" type='password' maxlength="4"><br><br>
+            <p id="Error">@err</p>
+            <label id="label">User ID: </label><input id="userid" name="UserID" required type='number' autofocus min="1000 " max="9999" maxlength="4"><br><br>
+            <label id="label">PIN: </label><input id="pin" name="PIN" type='password' required maxlength="4"><br><br>
             <button id="loginbtn">LOGIN</button>
         </div>
     </form>

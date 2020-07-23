@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var sta = ViewData["st1"];
 }
 <html>
 <head>
@@ -10,13 +11,15 @@
 </head>
 <body>
     <form method="POST" action="/Home/Transfer">
+        <p>@sta</p>
         <label id="label">Enter the Amount to Transfer:</label>
         <input id="Amt" name="amt" type='number' min="1">
         <label id="label">Enter the Payee User ID to Transfer:</label>
         <input id="id2" name="id2" type='number' min="1">
         <button>SUBMIT</button>
+        <input type="button" value="Main Menu" onclick="history.back()" />
         <br>
     </form>
 </body>
 </html>
- 
+

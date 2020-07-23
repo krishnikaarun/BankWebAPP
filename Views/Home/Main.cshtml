@@ -13,32 +13,14 @@
 <body>
     <form method="POST" action="/Home/Display">
         <div class="MainPage">
-            @*<select id="Dropdown" onchange="changetextbox()" onload="changetextbox()">
-            <option value="DepositAmount">Deposit Amount</option>
-            <option value="WithdrawAmount">Withdraw Amount</option>
-            <option value="TranferAmount">Tranfer Amount</option>
-        </select><br><br>
-
-            <label id="label">Enter the Amount:</label><input id="Amt" name="amt" type='number' min="1"><br><br>
-            <label id="label">Payee User ID:</label><input id="UserID2" name="UserID2" maxlength="4" disabled><br><br>
-            <button id="Submit">Submit</button><br><br>
-        
-            <button id="WithdrawAmount">Withdraw Amount</button>
-            <button id="DepositAmount">Deposit Amount</button>
-            <button id="TransferAmount">Transfer Amount</button>
-            <button id="BalanceCheckbtn">Balance Check</button><br><br>
-            <button id="Viewbtn">Quick Transation View</button><br><br><br>
-    *@
-
-            <a id="BalanceCheckbtn" href="/Home/Display">View Balance</a>
-            <a id="DepositAmount" href="/Home/DepositView">Deposit</a>
-            <a id="WithdrawAmount" href="/Home/WithdrawView">Withdraw</a>
-            <a id="TransferAmount" href="/Home/TransferView">Transfer</a>
-            <a id="TransLog" href="/Home/TransLogView">Transfer</a>
+            <br><a id="BalanceCheckbtn" href="/Home/Display">View Balance</a><br>
+            <a id="DepositAmount" href="/Home/DepositView">Deposit</a><br>
+            <a id="WithdrawAmount" href="/Home/WithdrawView">Withdraw</a><br>
+            <a id="TransferAmount" href="/Home/TransferView">Transfer</a><br>
+            <a id="PINChange" href="/Home/PincView">Change PIN</a><br>
+            <a id="TransLog" href="/Home/TransLogView">View Transation History</a><br>
             <a id="logout" href="/Home/Logouts">Logout</a>
         </div>
     </form>
-        <script src="~/lib/jquery.js"></script> 
-        <script type="text/javascript" src="~/js/JavaScript.js"></script>
 </body>
 </html>
