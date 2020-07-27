@@ -21,7 +21,7 @@ namespace BankAPPWeb.Controllers
         public IActionResult Main([FromForm] int UserID, int PIN)
         {
             User item = this.bank.LoginUser(UserID, PIN);
-            if (item == null)
+            if (item.UserID == 0)
             {
                 string er = "Incorrect UserID or PIN";
                 this.HttpContext.Session.SetString("Error",er);

@@ -1,17 +1,19 @@
 ﻿using System;
-using MySql.Data.MySqlClient;
+using System.Data;
+//using MySql.Data.MySqlClient;
 using BankAPPWeb.Model;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Data.Sqlite;
 
 namespace BankAPPWeb.accountDAO
 {
     public class AccountDAO
     {
-        MySqlConnection conn;
-        string myConnectionString;
+        //MySqlConnection conn;
+        //string myConnectionString;
+        private readonly SqliteConnection conn;
         public AccountDAO()
         {
-            IConfiguration Configuration = new ConfigurationBuilder()
+            /*IConfiguration Configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
@@ -19,10 +21,15 @@ namespace BankAPPWeb.accountDAO
             myConnectionString = section.Value;
             conn = new MySqlConnection();
             conn.ConnectionString = myConnectionString;
+            */
+            SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder(); ;
+            connectionStringBuilder.DataSource = "./BankAPP_Data.db";
+            connectionStringBuilder.Mode = SqliteOpenMode.ReadWriteCreate;
+            conn = new SqliteConnection(connectionStringBuilder.ConnectionString);
         }
         public User Login(int UserID, int PIN)
         {
-            conn.Open();
+            /*conn.Open();
             string selectloginQuery = " SELECT  UserID, UserName  FROM Customers where UserID = " + UserID + " AND PIN = " + PIN;
             MySqlCommand view = new MySqlCommand(selectloginQuery, conn);
             MySqlDataReader dr = view.ExecuteReader();
@@ -38,13 +45,39 @@ namespace BankAPPWeb.accountDAO
             }
             conn.Close();
             return user1;
+            */
+            string selectloginQuery = " SELECT  UserID, UserName  FROM Customers where UserID = " + UserID + " AND PIN = " + PIN;
+            SqliteCommand view = new SqliteCommand(selectloginQuery, conn);
+            conn.Open();
+            SqliteDataReader dr = view.ExecuteReader();
+            User user1 = new User();
+            try
+             {
+                while (dr.Read())
+                {
+                    user1.UserID = dr.GetInt32(0);
+                }
+
+                return user1;
+            }
+             catch (Exception e)
+             {
+                 Console.WriteLine(e);
+                 user1.UserID = 0;
+                 return user1;
+             }
+             finally
+             {
+                 conn.Close();
+             }
+            
         }
         public int BalanceCheck(String UserID)
         {
             conn.Open();
             string BalanceCheckQuery = " SELECT TotAmount FROM Bank where UserID = " + UserID;
-            MySqlCommand view = new MySqlCommand(BalanceCheckQuery, conn);
-            MySqlDataReader reader = view.ExecuteReader();
+            SqliteCommand view = new SqliteCommand(BalanceCheckQuery, conn);
+            SqliteDataReader reader = view.ExecuteReader();
             int[] Balance = new int[1];
             while (reader.Read())
             {
@@ -56,9 +89,9 @@ namespace BankAPPWeb.accountDAO
         public int Deposit(int DepositAmount,string value)
         {
             string selectBankQuery = "SELECT TotAmount FROM Bank WHERE UserID =" + value;
-            MySqlCommand view = new MySqlCommand(selectBankQuery, conn);
+            SqliteCommand view = new SqliteCommand(selectBankQuery, conn);
             conn.Open();
-            MySqlDataReader reader = view.ExecuteReader();
+            SqliteDataReader reader = view.ExecuteReader();
             if (reader.Read())
             {
                 int[] TotAmount = new int[1];
@@ -74,18 +107,18 @@ namespace BankAPPWeb.accountDAO
         public int PINChange(int UserID, int NewPIN)
         {
             string NewPINChangeQuery = "UPDATE  Customers SET Pin=" + NewPIN + " where UserID = " + UserID;
-            MySqlCommand updateCommand = new MySqlCommand(NewPINChangeQuery, conn);
+            SqliteCommand updateCommand = new SqliteCommand(NewPINChangeQuery, conn);
             conn.Open();
-            MySqlDataReader reader = updateCommand.ExecuteReader();
+            SqliteDataReader reader = updateCommand.ExecuteReader();
             conn.Close();
             return NewPIN;
         }
         public int Withdraw(int WithdrawAmount,int UID)
         {
             string selectBankQuery = "SELECT TotAmount FROM Bank WHERE UserID =" + UID;
-            MySqlCommand view = new MySqlCommand(selectBankQuery, conn);
+            SqliteCommand view = new SqliteCommand(selectBankQuery, conn);
             conn.Open();
-            MySqlDataReader reader = view.ExecuteReader();
+            SqliteDataReader reader = view.ExecuteReader();
             if (reader.Read())
             {
                 int[] TotAmount = new int[1];
@@ -106,7 +139,7 @@ namespace BankAPPWeb.accountDAO
         public void UpdateAmount(int UserID, int TotAmount)
         {
             string UpdateQuery = "UPDATE  Bank SET TotAmount =" + TotAmount + " where UserID = " + UserID;
-            MySqlCommand updateCommand = new MySqlCommand(UpdateQuery, conn);
+            SqliteCommand updateCommand = new SqliteCommand(UpdateQuery, conn);
             conn.Open();
             updateCommand.ExecuteNonQuery();
             conn.Close();
@@ -115,9 +148,9 @@ namespace BankAPPWeb.accountDAO
         public void InsertDepositTrans(int UserID, int TotAmount)
         {
             string selectTransQuery = "SELECT AccountNo from Trans Where UserID=" + UserID;
-            MySqlCommand view = new MySqlCommand(selectTransQuery, conn);
+            SqliteCommand view = new SqliteCommand(selectTransQuery, conn);
             conn.Open();
-            MySqlDataReader reader = view.ExecuteReader();
+            SqliteDataReader reader = view.ExecuteReader();
             int[] AccountNo = new int[1];
             if (reader.Read())
             {
@@ -125,7 +158,7 @@ namespace BankAPPWeb.accountDAO
             }
             conn.Close();
             string InsertTransQuery = "INSERT INTO Trans (CD,Amount,AccountNo,UserID,Dated) VALUES ('C'," + TotAmount + "," + AccountNo[0] + "," + UserID + ",@DATE)";
-            MySqlCommand updateCommand = new MySqlCommand(InsertTransQuery, conn);
+            SqliteCommand updateCommand = new SqliteCommand(InsertTransQuery, conn);
             updateCommand.Parameters.AddWithValue("@DATE", DateTime.Now);
             conn.Open();
             int RowCount = updateCommand.ExecuteNonQuery();
@@ -135,9 +168,9 @@ namespace BankAPPWeb.accountDAO
         public void InsertWithdrawTrans(int UserID, int TotAmount)
         {
             string selectTransQuery = "SELECT AccountNo from Trans Where UserID=" + UserID;
-            MySqlCommand view = new MySqlCommand(selectTransQuery, conn);
+            SqliteCommand view = new SqliteCommand(selectTransQuery, conn);
             conn.Open();
-            MySqlDataReader reader = view.ExecuteReader();
+            SqliteDataReader reader = view.ExecuteReader();
             int[] AccountNo = new int[1];
             if (reader.Read())
             {
@@ -145,7 +178,7 @@ namespace BankAPPWeb.accountDAO
             }
             conn.Close();
             string InsertTransQuery = "INSERT INTO Trans (CD,Amount,AccountNo,UserID,Dated) VALUES ('D'," + TotAmount + "," + AccountNo[0] + "," + UserID + ",@DATE)";
-            MySqlCommand updateCommand = new MySqlCommand(InsertTransQuery, conn);
+            SqliteCommand updateCommand = new SqliteCommand(InsertTransQuery, conn);
             updateCommand.Parameters.AddWithValue("@DATE", DateTime.Now);
             conn.Open();
             int RowCount = updateCommand.ExecuteNonQuery();
@@ -155,13 +188,13 @@ namespace BankAPPWeb.accountDAO
         {
             int i = 0;
             string countTransQuery = "SELECT COUNT(*) FROM Trans WHERE UserID = " + UserID;
-            MySqlCommand countCommand = new MySqlCommand(countTransQuery, conn);
+            SqliteCommand countCommand = new SqliteCommand(countTransQuery, conn);
             conn.Open();
             Int64 n = (Int64)countCommand.ExecuteScalar();
             User[] Tran1 = new User[n];
             string TransLogQuery = "SELECT TransID, CD, Amount, AccountNo, UserID, Dated FROM Trans WHERE UserID = " + UserID;
-            MySqlCommand selectCommand = new MySqlCommand(TransLogQuery, conn);
-            MySqlDataReader reader = selectCommand.ExecuteReader();
+            SqliteCommand selectCommand = new SqliteCommand(TransLogQuery, conn);
+            SqliteDataReader reader = selectCommand.ExecuteReader();
             while (reader.Read())
             {
                 User Tran = new User();
