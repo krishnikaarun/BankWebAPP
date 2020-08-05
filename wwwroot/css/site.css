@@ -30,12 +30,14 @@
     height: 20px;
     width: 100px;
     text-align: left;
+    color:black;
 }
 
 #loginbtn {
     padding: 20px;
     height: 50px;
     background-color:burlywood;
+    color:black;
 }
 
 h1 {
@@ -44,49 +46,16 @@ h1 {
     font-size: xx-large;
 }
 
-#totcount1 {
-    text-align: center;
-    margin-top: 10px;
-    text-align: center;
-    font-family: 'Adobe Arabic';
-    font-size: large;
-    padding: 5px;
-}
 
-#top1 {
-    text-align: center;
-    margin-top: 10px;
-    font-family: 'Adobe Arabic';
-    font-size: large;
-    padding: 5px;
-}
 .MainPage {
     text-align: center;
 }
-#Dropdown {
-    font-family: 'Adobe Devanagari';
-    padding: 15px;
-}
 
 
-#TransLog {
+#WithdrawAmount, #TransferAmount, #DepositAmount, #PINChange, #BalanceCheckbtn, #TransLog {
     display: block;
     width: 150px;
-    height: 50px;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    color: white;
-    background-color: dodgerblue;
-    font-weight: bold;
-    margin: 0 auto;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-#WithdrawAmount, #TransferAmount, #DepositAmount, #PINChange, #BalanceCheckbtn {
-    display: block;
-    width: 150px;
-    height: 15px;
+    height: auto;
     padding: 10px;
     text-align: center;
     border-radius: 5px;
@@ -101,7 +70,7 @@ h1 {
 #logout  {
     display: block;
     width: 150px;
-    height: 15px;
+    height:auto;
     padding: 10px;
     text-align: center;
     border-radius: 5px;
@@ -148,6 +117,7 @@ h1 {
     text-align: center;
     font-family: 'Comic Sans MS';
     align-content: center;
+    color:black;
 }
 
 #Amt,#id2 , #pin1, #pin2, #pin3{
@@ -157,4 +127,8 @@ h1 {
     border-radius: 20px;
     text-align: left;
     background-color: cornsilk;
+    color:black;
+}
+.tabel {
+    color:white;
 }

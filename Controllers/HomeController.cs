@@ -50,18 +50,14 @@ namespace BankAPPWeb.Controllers
         [HttpGet]
         public IActionResult Display()
         {
-            var IsCookieAvail = Request.Cookies.ContainsKey("Cookie1");
-            string value;
-            Request.Cookies.TryGetValue("Cookie1", out value);
+            Request.Cookies.ContainsKey("Cookie1");
+            Request.Cookies.TryGetValue("Cookie1", out string value);
             int item1 = this.bank.BalanceCheckUser(value);
-            //
             this.HttpContext.Session.SetInt32("Balance", item1);
             var Bal = this.HttpContext.Session.GetInt32("Balance");
             ViewData["Balance"] = Bal;
-            //
             return View("Display");
         }
-
         [HttpGet]
         public IActionResult DepositView()
         {
@@ -89,9 +85,8 @@ namespace BankAPPWeb.Controllers
         [HttpPost]
         public IActionResult Withdraw([FromForm] int Amt)
         {
-            var IsCookieAvail = Request.Cookies.ContainsKey("Cookie1");
-            string value;
-            Request.Cookies.TryGetValue("Cookie1", out value);
+            Request.Cookies.ContainsKey("Cookie1");
+            Request.Cookies.TryGetValue("Cookie1", out string value);
             int UID = Convert.ToInt32(value);
             int item1 = this.bank.BalanceCheckUser(value);
             //
@@ -104,7 +99,7 @@ namespace BankAPPWeb.Controllers
             }
             else
             {
-                string st = "Low Balance";
+                string st = "Insufficient balance in your account!";
                 this.HttpContext.Session.SetString("st", st);
                 var Err = this.HttpContext.Session.GetString("st");
                 ViewData["st"] = Err;
@@ -119,9 +114,8 @@ namespace BankAPPWeb.Controllers
         [HttpPost]
         public IActionResult Transfer([FromForm] int Amt, int id2)
         {
-            var IsCookieAvail = Request.Cookies.ContainsKey("Cookie1");
-            string value;
-            Request.Cookies.TryGetValue("Cookie1", out value);
+            Request.Cookies.ContainsKey("Cookie1");
+            Request.Cookies.TryGetValue("Cookie1", out string value);
             int UID = Convert.ToInt32(value);
 
             int item1 = this.bank.BalanceCheckUser(value);
@@ -129,11 +123,11 @@ namespace BankAPPWeb.Controllers
             var Bal = this.HttpContext.Session.GetInt32("Balance");
             if (Amt <= Bal)
             {
-                int item = this.bank.TransferUser(Amt, UID, id2);
+                this.bank.TransferUser(Amt, UID, id2);
                 return View("TransferSuccess");
             }
             else {
-                string st1 = "Low balance in your account!";
+                string st1 = "Insufficient balance in your account!";
                 this.HttpContext.Session.SetString("st1", st1);
                 var stt1 = this.HttpContext.Session.GetString("st1");
                 ViewData["st1"] = stt1;
@@ -155,20 +149,18 @@ namespace BankAPPWeb.Controllers
         {
             if (pin1 == pin2)
             {
-                var IsCookieAvail = Request.Cookies.ContainsKey("Cookie1");
-                string value;
-                Request.Cookies.TryGetValue("Cookie1", out value);
+                Request.Cookies.ContainsKey("Cookie1");
+                Request.Cookies.TryGetValue("Cookie1", out string value);
                 int UID = Convert.ToInt32(value);
-                int item = this.bank.PinChangeUser(UID, pin3);
+                this.bank.PinChangeUser(UID, pin3);
             }
             return View("PinCSuccess");
         }
         [HttpGet]
         public IActionResult TransLogView()
         {
-            var IsCookieAvail = Request.Cookies.ContainsKey("Cookie1");
-            string value;
-            Request.Cookies.TryGetValue("Cookie1", out value);
+            Request.Cookies.ContainsKey("Cookie1");
+            Request.Cookies.TryGetValue("Cookie1", out string value);
             int UID = Convert.ToInt32(value);
             User[] Trans = this.bank.TransLog(UID);
             return View(Trans);

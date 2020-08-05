@@ -10,25 +10,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <div id="center" class="table-responsive">
+        <table class="table">
+            <caption>Statement Summary</caption>
+            <tread>
+                <tr>
+                    <th scope="col">Transation ID</th>
+                    <th scope="col">Transation Type</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">From Account</th>
+                    <th scope="col">To Account</th>
+                    <th scope="col">Date and time</th>
+                    <th scope="col">Balance</th>
+                </tr>
+            </tread>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope="row" data-label="Transation ID">@item.TransID</td>
+                        <td scope="row" data-label="Transation Type">@item.CD</td>
+                        <td scope="row" data-label="Amount">@item.Amount</td>
+                        <td scope="row" data-label="From Account">@item.AccountNo1</td>
+                        <td scope="row" data-label="To Account">@item.AccountNo2</td>
+                        <td scope="row" data-label="Date and time">@item.Dated</td>
+                        <td scope="row" data-label="Balance">@item.bal</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <div id="center">
-    <table class="table">
-        <tr>
-            <th>Transation ID</th>
-            <th>Transation Type</th>
-            <th>Amount</th>
-            <th>Dated</th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.TransID</td>
-                <td>@item.CD</td>
-                <td>@item.Amount</td>
-                <td>@item.Dated</td>
-            </tr>
-        }
-    </table>
-    <input type="button" value="Main Menu" id="Mainbtn" onclick="history.back()" />
+        <input type="button" value="Main Menu" id="Mainbtn" onclick="history.back()" />
     </div>
 </body>
 </html>

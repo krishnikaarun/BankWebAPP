@@ -16,8 +16,11 @@ namespace BankAPPWeb.Model
 
         public int Amount { get; set; }
 
-        public int AccountNo { get; set; }
+        public int AccountNo1 { get; set; }
+        public int AccountNo2 { get; set; }
 
         public string Dated { get; set; }
+        public int TotAmount { get; set; }
+        public int bal { get; set; }
     }
 }

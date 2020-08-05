@@ -10,16 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <form method="POST" action="/Home/Transfer">
-        <p>@sta</p>
-        <label id="label">Enter the Amount to Transfer:</label>
-        <input id="Amt" name="amt" type='number' min="1">
-        <label id="label">Enter the Payee User ID to Transfer:</label>
-        <input id="id2" name="id2" type='number' min="1">
-        <button id="Mainbtn">SUBMIT</button>
-        <input type="button" id="Mainbtn" value="Main Menu" onclick="history.back()" />
-        <br>
-    </form>
+    <div id="center">
+        <form method="POST" action="/Home/Transfer">        
+            <p>@sta</p><br><br>
+            <label id="label">Enter the Amount to Transfer:</label>
+            <input id="Amt" name="amt" type='number' min="1"><br><br><br>
+            <label id="label">Enter the Payee User ID to Transfer:</label>
+            <input id="id2" name="id2" type='number' min="1"><br><br><br>
+            <button id="Mainbtn">SUBMIT</button>
+            <input type="button" id="Mainbtn" value="Main Menu" onclick="history.back()" />
+            <br>
+        </form>
+    </div>
 </body>
 </html>
 

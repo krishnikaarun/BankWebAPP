@@ -34,8 +34,7 @@ namespace BankAPPWeb.Banks
         }
         public int TransferUser(int Amt, int UID, int UID2)
         {
-            int User3 = this.accountdao.Withdraw(Amt, UID);
-            int User4 = this.accountdao.Deposit(Amt, Convert.ToString(UID2));
+            int User3 = this.accountdao.Transfer(Amt, UID,UID2);
             return User3;
         }
         public int PinChangeUser(int UID, int NewPIN)
